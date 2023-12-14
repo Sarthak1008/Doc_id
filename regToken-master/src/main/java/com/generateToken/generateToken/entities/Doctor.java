@@ -35,9 +35,9 @@ public class Doctor {
 //    @Column(unique = true,length=10)
 //    private String contact;
 
-  @Column(unique = true, length = 10)
-  @Size(min = 10, max = 10, message = "Contact length must be exactly 10 characters")
-  private String contact;
+    @Column(unique = true, length = 10)
+    @Size(min = 10, max = 10, message = "Contact length must be exactly 10 characters")
+    private String contact;
     @Column(unique = true)
     private String email;
     private String password;
