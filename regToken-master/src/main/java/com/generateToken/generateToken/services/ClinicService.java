@@ -21,7 +21,9 @@ public interface ClinicService {
 
     Double findAmountForClinicInDateRange(Long clinicId, Date startDate, Date endDate);
 
-    String deleteClinic(Long doctor_id,Long id);
+    List<Clinic> getAllClinics();
+
+    //String deleteClinic(Long doctor_id,Long id);
 
     ClinicDto updateClinic(Long id, ClinicDto updatedClinicDto);
 }

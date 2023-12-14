@@ -1,14 +1,14 @@
 package com.generateToken.generateToken.repositories;
 
-import com.generateToken.generateToken.dto.AppointmentDTOs;
-import com.generateToken.generateToken.entities.Appointment;
+
+import java.util.Date;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import com.generateToken.generateToken.entities.Appointment;
+
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment,Integer> {

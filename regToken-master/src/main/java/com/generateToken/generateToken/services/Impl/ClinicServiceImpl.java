@@ -120,7 +120,8 @@ public class ClinicServiceImpl implements ClinicService {
     public Optional<Clinic> getClinicById(Long clinicId) {
         return clinicRepository.findById(clinicId);
     }
-
+    
+    
     @Transactional
     public String deleteClinic(Long doctorId, Long clinicId) {
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Doctor not found"));
@@ -176,6 +177,11 @@ public class ClinicServiceImpl implements ClinicService {
         updatedClinicDtoResponse.setEndTime(clinic.getEndTime());
 
         return updatedClinicDtoResponse;
+    }
+
+    @Override
+    public List<Clinic> getAllClinics() {
+        return clinicRepository.findAll();
     }
 
 }

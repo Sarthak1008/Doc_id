@@ -1,20 +1,23 @@
 package com.generateToken.generateToken.services.Impl;
 
-import com.generateToken.generateToken.dto.SignupRequest;
-import com.generateToken.generateToken.dto.DoctorDTO;
-import com.generateToken.generateToken.repositories.DoctorRepository;
-import com.generateToken.generateToken.services.DoctorService;
-import jakarta.persistence.Transient;
-import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.userdetails.User;
-import com.generateToken.generateToken.entities.Doctor;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Optional;
+import com.generateToken.generateToken.dto.DoctorDTO;
+import com.generateToken.generateToken.dto.SignupRequest;
+//import org.springframework.security.core.userdetails.User;
+import com.generateToken.generateToken.entities.Doctor;
+import com.generateToken.generateToken.repositories.DoctorRepository;
+import com.generateToken.generateToken.services.DoctorService;
+
+import jakarta.persistence.Transient;
+import jakarta.transaction.Transactional;
 
 @Service
 
@@ -96,5 +99,40 @@ public class DoctorServiceImpl implements DoctorService {
     public Double findAmt(Long docId, Date startDate, Date endDate) {
         System.out.println(doctorRepository.findByTotalAmount(docId,startDate,endDate));
         return doctorRepository.findByTotalAmount(docId,startDate,endDate);
+    }
+
+    @Override
+    public List<Doctor> getAllDoctors() {
+        return doctorRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Doctor updateDoctor(Long doctorId,Doctor updatedDoctor) {
+        Doctor existingDoctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new NotFoundException("Doctor not found"));
+        existingDoctor.setName(updatedDoctor.getName());
+        existingDoctor.setSpecialization(updatedDoctor.getSpecialization());
+        existingDoctor.setDegree(updatedDoctor.getDegree());
+        existingDoctor.setCitations(updatedDoctor.getCitations());
+        existingDoctor.setContact(updatedDoctor.getContact());
+        existingDoctor.setExperience(updatedDoctor.getExperience());
+        existingDoctor.setEmail(updatedDoctor.getEmail());
+        existingDoctor.setSpecialization(updatedDoctor.getSpecialization());
+        existingDoctor.setResearch_journal(updatedDoctor.getResearch_journal());
+        doctorRepository.save(existingDoctor);
+        return existingDoctor;
+    }
+
+    @Override
+    public String deleteDoctor(long doctorId) {
+        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+        if(doctor.isPresent()){
+            doctorRepository.deleteById(doctorId);
+        }else{
+            throw new NotFoundException("Doctor not found");
+        }
+        String s = "Deleted doctor " + doctorId;
+        return s;
     }
 }

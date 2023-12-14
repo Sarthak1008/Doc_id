@@ -93,6 +93,12 @@ public class ClinicController {
 
     }
 
+    @GetMapping("/getAll")
+    public List<Clinic> getAllClinics() {
+        return clinicService.getAllClinics();
+    }
+    
+
     @GetMapping("/amount")
     public ResponseEntity<Double> findAmountForClinicInDateRange(
             @RequestParam Long clinicId,

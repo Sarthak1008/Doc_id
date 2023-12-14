@@ -19,17 +19,10 @@ public class WebSecurityConfiguration {
    // ,"/clinic/amount"
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      return  http.csrf(csrf -> csrf.disable())
-               .authorizeHttpRequests(authorizeHttpRequests -> {
-                   authorizeHttpRequests
+      return  http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authorizeHttpRequests -> {authorizeHttpRequests
                            .requestMatchers("/authenticate", "/sign-up","/home/register","/home/**","/clinic/betweenDate","/appointment/book1","/clinic/getApt","/image/**","/clinic/add","clinic/**").permitAll()
-                           .requestMatchers("/api/**","/home/amount").authenticated();
-               } )
-              .sessionManagement(sessionManagement ->
-                      sessionManagement
-                              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-              )
-              .build();
+                           .requestMatchers("/api/**","/home/amount","/clinic/amount").authenticated();
+               } ).sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
     }
 
     @Bean
