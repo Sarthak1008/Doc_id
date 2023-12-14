@@ -21,6 +21,7 @@ import com.generateToken.generateToken.repositories.DoctorRepository;
 import com.generateToken.generateToken.services.ClinicService;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ClinicServiceImpl implements ClinicService {
@@ -120,22 +121,19 @@ public class ClinicServiceImpl implements ClinicService {
         return clinicRepository.findById(clinicId);
     }
 
-    @Override
-    public String deleteClinic(Long doctor_id, Long clinic_id) {
-        Doctor doctor = doctorRepository.findById(doctor_id)
-                .orElseThrow(() -> new EntityNotFoundException("Doctor not found"));
+    @Transactional
+    public String deleteClinic(Long doctorId, Long clinicId) {
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Doctor not found"));
 
-        Clinic clinicToDelete = clinicRepository.findById(clinic_id)
-                .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
+        Clinic clinicToDelete = doctor.getClinics().stream()
+                .filter(clinic -> clinic.getId().equals(clinicId))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Clinic not found under this doctor"));
 
-        // Check if the clinic belongs to the specified doctor
-        if (doctor.getClinics().removeIf(clinic -> clinic.getId().equals(clinic_id))) {
-            // Remove the clinic from the doctor's list and update the relationship
-            doctorRepository.save(doctor);
-            return "Clinic Deleted " + clinic_id + " for Doctor " + doctor_id;
-        } else {
-            return "Clinic not found for deletion for Doctor " + doctor_id;
-        }
+        doctor.removeClinic(clinicToDelete);
+        clinicRepository.delete(clinicToDelete);
+
+        return "Clinic of id " + clinicId + " deleted under the doctor of doctorId " + doctorId;
     }
 
     
@@ -179,6 +177,5 @@ public class ClinicServiceImpl implements ClinicService {
 
         return updatedClinicDtoResponse;
     }
-
 
 }

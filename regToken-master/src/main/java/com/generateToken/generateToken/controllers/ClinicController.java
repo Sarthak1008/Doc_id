@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.generateToken.generateToken.Custome.ClinicNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -58,7 +57,7 @@ public class ClinicController {
     @DeleteMapping("/delete/{doctor_id}/{id}")
     public ResponseEntity<?> deleteClinic(@PathVariable Long doctor_id,@PathVariable Long id) {
         System.out.println("hello");
-        String str = clinicService.deleteClinic(doctor_id,id);
+        String str = clinicService.deleteClinic(doctor_id, id);
         return new ResponseEntity<>(str, HttpStatus.OK);
     }
 

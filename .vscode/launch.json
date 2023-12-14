@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GenerateTokenApplication<generateToken>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.generateToken.generateToken.GenerateTokenApplication",
+            "projectName": "generateToken",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

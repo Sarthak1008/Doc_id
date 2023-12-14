@@ -48,6 +48,7 @@ public class Clinic {
         this.appointmentList.add(appointment);
     }
 
+
     public List<AppointmentDTOs> getAppointmentDto(){
         List<AppointmentDTOs> appointmentDTOs = new ArrayList<>();
         for(Appointment appointment : this.appointmentList){
