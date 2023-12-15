@@ -57,5 +57,4 @@ public class Clinic {
         return appointmentDTOs;
     }
 
-
 }

@@ -23,7 +23,7 @@ public interface ClinicService {
 
     List<Clinic> getAllClinics();
 
-    //String deleteClinic(Long doctor_id,Long id);
+    String deleteClinic(Long doctor_id,Long id);
 
     ClinicDto updateClinic(Long id, ClinicDto updatedClinicDto);
 }
