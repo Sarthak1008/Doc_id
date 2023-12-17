@@ -1,11 +1,12 @@
 package com.generateToken.generateToken.repositories;
 
-import com.generateToken.generateToken.entities.Doctor;
+import java.util.Date;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import com.generateToken.generateToken.entities.Doctor;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor,Long> {

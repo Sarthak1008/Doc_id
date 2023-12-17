@@ -1,10 +1,10 @@
 package com.generateToken.generateToken.dto;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 
 import com.generateToken.generateToken.Gender.Gender;
+import com.generateToken.generateToken.entities.MedicinePrescription;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +27,7 @@ public class PrescriptionDto {
     private Long patientId;
     private int patientAge;
     private Gender gender;
-    private List<HashMap<String, Integer>> medicinesPrescribed;
+    private List<MedicinePrescription> medicinesPrescribed;
     private LocalDate startDateOfMedication;
     private LocalDate endDateOfMedication;
     private String contactOfClinic;

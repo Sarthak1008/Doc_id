@@ -2,7 +2,6 @@ package com.generateToken.generateToken.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.generateToken.generateToken.Gender.Gender;
@@ -16,14 +15,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Entity
 @Table(name = "prescription")
 @Data
@@ -36,26 +35,21 @@ public class Prescription {
     private Long prescriptionId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clinicId", referencedColumnName = "id")
-    private Clinic clinic;
+    @JoinColumn(name = "patient_contact_number", referencedColumnName = "contactNumber")
+    private Appointment appointment;
 
-    @Column(name ="currDate")
+    @Column(name = "currDate")
     private LocalDate currDate = LocalDate.now();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctorName", referencedColumnName = "name")
+    @OneToOne
+    @JoinColumn(name = "doctorId")
     private Doctor doctor;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patientId", referencedColumnName = "id")
-    private Appointment appointmentId;
-
-    private int patientAge = (appointmentId != null) ? appointmentId.getAge() : 0;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    List<HashMap<String, Integer>> medicinesPrescribed = new ArrayList<>();
+    @OneToMany(mappedBy = "prescription", cascade = CascadeType.ALL)
+    private List<MedicinePrescription> medicinesPrescribed = new ArrayList<>();
 
     @Column(name = "start_date_of_medication")
     private LocalDate startDateOfMedication;
@@ -63,12 +57,32 @@ public class Prescription {
     @Column(name = "end_date_of_medication")
     private LocalDate endDateOfMedication;
 
-    @Column(name = "contact_of_clinic")
-    private String contactOfClinic = (doctor != null) ? doctor.getContact() : null;
+    // Transient fields that are not persisted in the database
+    @Transient
+    private int patientAge;
 
-    @Column(name = "speciality")
-    private String speciality = (doctor != null) ? doctor.getSpecialization() : null;
+    @Transient
+    private String contactOfClinic;
 
-    @Column(name = "location")
-    private String location = (clinic != null) ? clinic.getLocation() : null;
+    @Transient
+    private String speciality;
+
+    @Transient
+    private String location;
+
+    // Constructor
+    public Prescription(Appointment appointment, Doctor doctor) {
+        this.appointment = appointment;
+        this.currDate = LocalDate.now();
+        this.doctor = doctor;
+        this.gender = (appointment != null) ? appointment.getGender() : null;
+        this.patientAge = (appointment != null) ? appointment.getAge() : 0;
+        this.contactOfClinic = (doctor != null) ? doctor.getContact() : null;
+        this.speciality = (doctor != null) ? doctor.getSpecialization() : null;
+        this.location = (appointment != null && appointment.getClinic() != null) ?
+                appointment.getClinic().getLocation() : null;
+    }
+
+    // ... other methods ...
+
 }
