@@ -35,7 +35,7 @@ public class Prescription {
     private Long prescriptionId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_contact_number", referencedColumnName = "contactNumber")
+    @JoinColumn(name = "patient_contact_number", referencedColumnName = "contact_number")
     private Appointment appointment;
 
     @Column(name = "currDate")

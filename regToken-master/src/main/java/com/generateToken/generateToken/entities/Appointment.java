@@ -7,11 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.generateToken.generateToken.Gender.Gender;
 import com.generateToken.generateToken.dto.AppointmentDTOs;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,10 +24,10 @@ import lombok.Data;
 @Table(name = "Appointment")
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "contact_number", length = 255)
+    private String contact_number; // Updated to use contactNumber as the primary key
+
     private String name;
-    private String contactNumber;
     private String aadharNumber;
     private int age;
     @Enumerated(EnumType.STRING)
@@ -36,6 +35,7 @@ public class Appointment {
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
     private  String clinicLocation;
+
     @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "clinicId")
@@ -51,7 +51,7 @@ public class Appointment {
     public AppointmentDTOs getAppointmentDto(){
         AppointmentDTOs appointmentDTOs = new AppointmentDTOs();
         appointmentDTOs.setName(this.getName());
-        appointmentDTOs.setContactNumber(this.contactNumber);
+        appointmentDTOs.setContact_number(this.getContact_number());
         appointmentDTOs.setAadharNumber(this.aadharNumber);
         appointmentDTOs.setAge(this.age);
         appointmentDTOs.setGender(this.gender);

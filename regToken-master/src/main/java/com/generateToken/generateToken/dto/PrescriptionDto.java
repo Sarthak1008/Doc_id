@@ -21,10 +21,9 @@ public class PrescriptionDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prescriptionId;
-    private Long clinicId;
+    private String patient_contact_number; // Assuming it's a String, update the type accordingly
     private LocalDate currDate;
-    private String doctorName;
-    private Long patientId;
+    private Long doctorId;
     private int patientAge;
     private Gender gender;
     private List<MedicinePrescription> medicinesPrescribed;
@@ -33,7 +32,7 @@ public class PrescriptionDto {
     private String contactOfClinic;
     private String speciality;
     private String location;
-
     // Constructors, getters, and setters...
 
 }
+

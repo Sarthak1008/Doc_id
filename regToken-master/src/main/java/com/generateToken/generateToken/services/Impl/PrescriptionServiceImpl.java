@@ -27,6 +27,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public PrescriptionDto getPrescriptionById(Long prescriptionId) {
+        Prescription prescription = prescriptionRepository.findById(prescriptionId).orElseThrow(() -> new NotFoundException("Prescription not found"));
+        prescription.setSpeciality(prescription.getDoctor().getSpecialization());
+        prescription.setPatientAge(prescription.getAppointment().getAge());
+        prescription.setLocation(prescription.getAppointment().getClinicLocation());
         return convertToDTO(prescriptionRepository.findByPrescriptionId(prescriptionId));
     }
 

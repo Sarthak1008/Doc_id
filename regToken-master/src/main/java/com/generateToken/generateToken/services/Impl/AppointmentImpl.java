@@ -1,5 +1,8 @@
 package com.generateToken.generateToken.services.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.generateToken.generateToken.dto.AppointmentDTOs;
 import com.generateToken.generateToken.entities.Appointment;
 import com.generateToken.generateToken.entities.Clinic;
@@ -8,9 +11,8 @@ import com.generateToken.generateToken.repositories.AppointmentRepository;
 import com.generateToken.generateToken.repositories.ClinicRepository;
 import com.generateToken.generateToken.repositories.DoctorRepository;
 import com.generateToken.generateToken.services.AppointmentService;
+
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AppointmentImpl implements AppointmentService {
@@ -42,7 +44,7 @@ public class AppointmentImpl implements AppointmentService {
         Appointment patientAppointment = new Appointment();
 
         patientAppointment.setName(appointmentDto.getName());
-        patientAppointment.setContactNumber(appointmentDto.getContactNumber());
+        patientAppointment.setContact_number(appointmentDto.getContact_number());
         patientAppointment.setAadharNumber(appointmentDto.getAadharNumber());
         patientAppointment.setAge(appointmentDto.getAge());
         patientAppointment.setGender(appointmentDto.getGender());
@@ -58,7 +60,7 @@ public class AppointmentImpl implements AppointmentService {
 
         AppointmentDTOs appointmentDto1 =  new AppointmentDTOs();
         appointmentDto1.setName(patientAppointment.getName());
-        appointmentDto1.setContactNumber(patientAppointment.getContactNumber());
+        appointmentDto1.setContact_number(patientAppointment.getContact_number());
         appointmentDto1.setAadharNumber(patientAppointment.getAadharNumber());
         appointmentDto1.setAge(patientAppointment.getAge());
         appointmentDto1.setGender(patientAppointment.getGender());

@@ -25,7 +25,7 @@ public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;
 
-    @PostMapping("/addPrescription")
+    @PostMapping("/addPrescription/{phoneNumber}")
     public ResponseEntity<PrescriptionDto> createPrescription(@RequestBody Prescription prescription) {
         PrescriptionDto createdPrescription = prescriptionService.createPrescription(prescription);
         return new ResponseEntity<>(createdPrescription, HttpStatus.CREATED);
