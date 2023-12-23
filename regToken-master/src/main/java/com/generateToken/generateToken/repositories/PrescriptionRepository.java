@@ -8,6 +8,5 @@ import com.generateToken.generateToken.entities.Prescription;
 
 @Repository
 public interface PrescriptionRepository extends JpaRepository<Prescription,Long>{
-
     Prescription findByPrescriptionId(Long prescriptionId);
 }

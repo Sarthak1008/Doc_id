@@ -11,9 +11,9 @@ import com.generateToken.generateToken.entities.Appointment;
 
 
 @Repository
-public interface AppointmentRepository extends JpaRepository<Appointment,String> {
+public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     @Query(value = "select count(*) from appointment where clinic_id = :clinicId  and  appointment_date <= :endDate and  appointment_date >= :startDate ",nativeQuery = true)
     public int findByAppointmentDateBetween(Long clinicId, Date startDate, Date endDate);
-    
+
 
 }

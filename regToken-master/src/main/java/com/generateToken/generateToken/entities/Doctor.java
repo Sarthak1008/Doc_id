@@ -43,6 +43,9 @@ public class Doctor {
     private String password;
 
 
+
+
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Clinic> clinics = new ArrayList<>();
 
@@ -54,9 +57,12 @@ public class Doctor {
         this.clinics.remove(clinic);
         clinic.setDoctor(null);
     }
-    
+
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
     private List<Appointment> appointmentPatientList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    private List<Prescription> prescriptionList = new ArrayList<>();
 
 
     public void addAppointmentPatient1(Appointment appointment){

@@ -6,8 +6,7 @@ import java.time.LocalTime;
 import com.generateToken.generateToken.Gender.Gender;
 import com.generateToken.generateToken.entities.Clinic;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class AppointmentDTOs {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
     private String name;
-    private String contact_number;
+    private String contact;
     private String aadharNumber;
     private int age;
     @Enumerated(EnumType.STRING)

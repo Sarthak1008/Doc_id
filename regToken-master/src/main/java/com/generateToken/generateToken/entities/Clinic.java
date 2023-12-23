@@ -39,7 +39,7 @@ public class Clinic {
     @JsonIgnore
     @JoinColumn(name = "doctorId")
     private Doctor doctor;
-    
+
 
     @OneToMany( cascade = CascadeType.ALL)
     private List<Appointment> appointmentList = new ArrayList<>();
@@ -48,11 +48,18 @@ public class Clinic {
         this.appointmentList.add(appointment);
     }
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Prescription> prescriptionList = new ArrayList<>();
+
+    public void addPrescription(Prescription prescription){
+      this.prescriptionList.add(prescription);}
+
 
     public List<AppointmentDTOs> getAppointmentDto(){
         List<AppointmentDTOs> appointmentDTOs = new ArrayList<>();
         for(Appointment appointment : this.appointmentList){
-            appointmentDTOs.add(appointment.getAppointmentDto());
+            //appointmentDTOs.add(appointment.getAppointmentDto());
+          appointmentDTOs.add(appointment.getAppointmentDto());
         }
         return appointmentDTOs;
     }

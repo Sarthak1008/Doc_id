@@ -10,6 +10,5 @@ public class GenerateTokenApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GenerateTokenApplication.class, args);
-
 	}
 }

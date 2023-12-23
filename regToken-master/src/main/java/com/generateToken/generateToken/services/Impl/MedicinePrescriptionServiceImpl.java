@@ -39,7 +39,7 @@ public class MedicinePrescriptionServiceImpl implements MedicinePrescriptionServ
             }
         }
          Prescription prescription = prescriptionRepository.findByPrescriptionId(prescriptionId);
-         prescription.setMedicinesPrescribed(d);
+        // prescription.setMedicinesPrescribed(d);
         return d;
     }
 

@@ -52,11 +52,12 @@ public class SignUpUserController {
         }
     }
 
+
     @GetMapping("/getAllDoctors")
     public List<Doctor> getAllDoctors() {
         return doctorService.getAllDoctors();
     }
-    
+
 
     @GetMapping("/amount")
     public ResponseEntity<?> getAmount(@RequestParam Long docId,

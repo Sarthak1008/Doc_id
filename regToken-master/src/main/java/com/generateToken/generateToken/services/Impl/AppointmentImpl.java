@@ -25,13 +25,18 @@ public class AppointmentImpl implements AppointmentService {
     @Autowired
     private ClinicRepository clinicRepository;
 
-    @Override
-    public Appointment getByAadhar(String aadharCard) {
-      // return appointmentRepository.findByAadharCard(aadharCard);
-        return null;
-    }
+    //@Override
+//    public Appointment getByAadhar(String aadharCard) {
+//       return appointmentRepository.findByAadharCard(aadharCard);
+//        //return null;
+//    }
 
-    @Override
+  @Override
+  public Appointment getByAadhar(String aadharCard) {
+    return null;
+  }
+
+  @Override
     public AppointmentDTOs bookAppointment(Long doctorId,Long clinicId, AppointmentDTOs appointmentDto) {
 
         Clinic clinic = clinicRepository.findById(clinicId)
@@ -44,7 +49,8 @@ public class AppointmentImpl implements AppointmentService {
         Appointment patientAppointment = new Appointment();
 
         patientAppointment.setName(appointmentDto.getName());
-        patientAppointment.setContact_number(appointmentDto.getContact_number());
+        //patientAppointment.setContact_number(appointmentDto.getContact_number());
+        //patientAppointment.setContact_number(appointmentDto.);
         patientAppointment.setAadharNumber(appointmentDto.getAadharNumber());
         patientAppointment.setAge(appointmentDto.getAge());
         patientAppointment.setGender(appointmentDto.getGender());
@@ -60,7 +66,7 @@ public class AppointmentImpl implements AppointmentService {
 
         AppointmentDTOs appointmentDto1 =  new AppointmentDTOs();
         appointmentDto1.setName(patientAppointment.getName());
-        appointmentDto1.setContact_number(patientAppointment.getContact_number());
+        //appointmentDto1.setContact_number(patientAppointment.getContact_number());
         appointmentDto1.setAadharNumber(patientAppointment.getAadharNumber());
         appointmentDto1.setAge(patientAppointment.getAge());
         appointmentDto1.setGender(patientAppointment.getGender());
