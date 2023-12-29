@@ -26,7 +26,7 @@ public class Appointment {
 
     private String name;
 
-    private String contact_number;
+    private String contact;
     private String aadharNumber;
     private int age;
     @Enumerated(EnumType.STRING)

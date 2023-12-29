@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.generateToken.generateToken.dto.DoctorDTO;
 import com.generateToken.generateToken.dto.SignupRequest;
@@ -37,6 +38,7 @@ public class SignUpUserController {
         if (createdUser == null){
             return new ResponseEntity<>("User not created, come again later!", HttpStatus.BAD_REQUEST);
         }
+        System.out.println(HttpStatus.OK);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
@@ -75,6 +77,13 @@ public class SignUpUserController {
     @DeleteMapping("deleteDoctor/{id}")
     public String deleteMethodName(@PathVariable Long id) {
         return doctorService.deleteDoctor(id);
+    }
+
+    
+    @GetMapping("/payment")
+    public RedirectView redirectToYoutube() {
+        String youtubeUrl = "http://localhost:9090/";
+        return new RedirectView(youtubeUrl);
     }
 
 }

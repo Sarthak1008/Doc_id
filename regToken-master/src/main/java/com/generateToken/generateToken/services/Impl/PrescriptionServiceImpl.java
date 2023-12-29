@@ -3,24 +3,25 @@ package com.generateToken.generateToken.services.Impl;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.generateToken.generateToken.dto.AppointmentDTOs;
-import com.generateToken.generateToken.entities.Appointment;
-import com.generateToken.generateToken.entities.Clinic;
-import com.generateToken.generateToken.entities.Doctor;
-import com.generateToken.generateToken.repositories.AppointmentRepository;
-import com.generateToken.generateToken.repositories.ClinicRepository;
-import com.generateToken.generateToken.repositories.DoctorRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.generateToken.generateToken.dto.PrescriptionDto;
+import com.generateToken.generateToken.entities.Appointment;
+import com.generateToken.generateToken.entities.Clinic;
+import com.generateToken.generateToken.entities.Doctor;
+import com.generateToken.generateToken.entities.MedicinePrescription;
 import com.generateToken.generateToken.entities.Prescription;
+import com.generateToken.generateToken.repositories.AppointmentRepository;
+import com.generateToken.generateToken.repositories.ClinicRepository;
+import com.generateToken.generateToken.repositories.DoctorRepository;
+import com.generateToken.generateToken.repositories.MedicinePrescriptionRepository;
 import com.generateToken.generateToken.repositories.PrescriptionRepository;
 import com.generateToken.generateToken.services.PrescriptionService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService {
@@ -36,6 +37,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private MedicinePrescriptionRepository medicinePrescriptionRepository;
 
   @Override
   public PrescriptionDto bookPrescription(Long doctorId, Long clinicId,Long appointId, PrescriptionDto prescriptionDto) {
@@ -60,7 +64,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     prescription.setStartTime(clinic.getStartTime());
     prescription.setEndTime(clinic.getEndTime());
     prescription.setAge(appointment.getAge());
-    prescription.setContact(appointment.getContact_number());
 
 
     prescription = prescriptionRepository.save(prescription);
@@ -75,5 +78,42 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     doctor = doctorRepository.save(doctor);
 
     return prescriptionDto1;
+  }
+
+  @Override
+  public PrescriptionDto getPrescriptionById(Long prescriptionId,String patientContact) {
+    Prescription prescription= prescriptionRepository.findById(prescriptionId).orElseThrow(() -> new EntityNotFoundException("Prescription not found"));
+    PrescriptionDto prescriptionDto = new PrescriptionDto();
+        BeanUtils.copyProperties(prescription, prescriptionDto);
+         List<MedicinePrescription> medicines = medicinePrescriptionRepository.findByPrescriptionId(prescriptionId);
+        prescriptionDto.setMedicines(medicines);
+        Long did = prescription.getDoctor().getId();
+        Doctor d = doctorRepository.findById(did).orElseThrow(()-> new EntityNotFoundException("Doctor not found"));
+        prescriptionDto.setSpeciality(d.getSpecialization());
+        prescriptionDto.setDocName(d.getName());
+        prescriptionDto.setDegree(d.getDegree());
+        Long cid = prescription.getClinic().getId();
+        Clinic c = clinicRepository.findById(cid).orElseThrow(()-> new EntityNotFoundException("Clinic not found"));
+        prescriptionDto.setLocation(c.getLocation());
+        prescriptionDto.setStartTime(c.getStartTime());
+        prescriptionDto.setContact(c.getDoctor().getContact());
+        prescriptionDto.setEndTime(c.getEndTime());
+        List<Appointment> appointments = appointmentRepository.findByContact(patientContact);
+        if (!appointments.isEmpty()) {
+          Appointment firstAppointment = appointments.get(0);
+          prescriptionDto.setAge(firstAppointment.getAge());
+          prescriptionDto.setPatient_Name(firstAppointment.getName());
+        }else{
+          throw new EntityNotFoundException("Not Proper mapping of phone number or wrong phone number according to appointment");
+        }
+        return prescriptionDto;
+
+  }
+
+  @Override
+  public String deletePrescription(Long prescriptionId) {
+    Prescription prescription = prescriptionRepository.findByPrescriptionId(prescriptionId);
+    prescriptionRepository.delete(prescription);
+        return "Prescription with id " + prescriptionId + " deleted successfully";
   }
 }

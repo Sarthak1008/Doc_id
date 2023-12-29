@@ -15,15 +15,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClinicDto {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String location;
     private String incharge;
-    private int fees;
+    private Double fees;
+    // @Column(name="pi",length = 6)
+    // private Integer pi;
     private LocalTime startTime;
     private LocalTime endTime;
     private Doctor doctor;
+    private Integer pincode;
 
 }

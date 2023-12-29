@@ -64,27 +64,54 @@ public class ClinicServiceImpl implements ClinicService {
 //        return appointmentDTOs1;
     }
 
-    @Override
-    public Double findAmountForClinicInDateRange(Long clinicId, java.util.Date startDate, java.util.Date endDate) {
-        Optional<Clinic> clinicOptional = clinicRepository.findById(clinicId);
-        System.out.println(appointmentRepository.findByAppointmentDateBetween(clinicId,startDate,endDate));
-        if (clinicOptional.isPresent()) {
-            Clinic clinic = clinicOptional.get();
+//    @Override
+//    public Double findAmountForClinicInDateRange(Long clinicId, java.util.Date startDate, java.util.Date endDate) {
+//        Optional<Clinic> clinicOptional = clinicRepository.findById(clinicId);
+//        System.out.println(appointmentRepository.findByAppointmentDateBetween(clinicId,startDate,endDate));
+//        if (clinicOptional.isPresent()) {
+//            Clinic clinic = clinicOptional.get();
+//
+//            List<Appointment> clinicAppointments = clinic.getAppointmentList();
+//          System.out.println(clinicAppointments);
+//            double totalAmount = 0;
+//          System.out.println("she");
+//            for (Appointment appointment : clinicAppointments) {
+//                Date appointmentDate = Date.valueOf(appointment.getAppointmentDate());
+//                if (appointmentDate.after(startDate) && appointmentDate.before(endDate)) {
+//                  System.out.println("he");
+//                    totalAmount += clinic.getFees();
+//                }
+//            }
+//            return totalAmount;
+//        } else {
+//            return null;
+//        }
+//    }
 
-            List<Appointment> clinicAppointments = clinic.getAppointmentList();
-            double totalAmount = 0.0;
+  @Override
+  public Double findAmountForClinicInDateRange(Long clinicId, java.util.Date startDate, java.util.Date endDate) {
+    Optional<Clinic> clinicOptional = clinicRepository.findById(clinicId);
 
-            for (Appointment appointment : clinicAppointments) {
-                Date appointmentDate = Date.valueOf(appointment.getAppointmentDate());
-                if (appointmentDate.after(startDate) && appointmentDate.before(endDate)) {
-                    totalAmount += clinic.getFees();
-                }
-            }
-            return totalAmount;
-        } else {
-            return null;
+    if (clinicOptional.isPresent()) {
+      Clinic clinic = clinicOptional.get();
+
+      List<Appointment> clinicAppointments = clinic.getAppointmentList();
+      double totalAmount = 0.0;
+
+      for (Appointment appointment : clinicAppointments) {
+        Date appointmentDate = Date.valueOf(appointment.getAppointmentDate());
+        if (appointmentDate.equals(startDate) || appointmentDate.equals(endDate) ||
+          (appointmentDate.after(startDate) && appointmentDate.before(endDate))) {
+          totalAmount += clinic.getFees();
+          System.out.println(totalAmount);
         }
+      }
+
+      return totalAmount;
+    } else {
+      return null;
     }
+  }
 
     public ClinicDto addClinic(Long doctorId, ClinicDto clinicDto) {
 
@@ -99,7 +126,12 @@ public class ClinicServiceImpl implements ClinicService {
         clinic.setFees(clinicDto.getFees());
         clinic.setStartTime(clinicDto.getStartTime());
         clinic.setEndTime(clinicDto.getEndTime());
+        //clinic.setPincode(clinicDto.getPincode());
         clinic.setDoctor(doctor);
+        clinic.setPincode(clinicDto.getPincode());
+        // clinic.setPi(clinicDto.getPi());
+       // clinic.setPin_code(clinicDto.getPin_code());
+
         clinic = clinicRepository.save(clinic);
 
         ClinicDto clinicDto1 = new ClinicDto();
@@ -108,6 +140,9 @@ public class ClinicServiceImpl implements ClinicService {
         clinicDto1.setFees(clinic.getFees());
         clinicDto1.setStartTime(clinic.getStartTime());
         clinicDto1.setEndTime(clinic.getEndTime());
+       // clinicDto1.setPin_code(clinicDto1.getPin_code());
+       // clinicDto1.setPincode(clinic.getPincode());
+       // clinicDto1.setPinCode(clinic.getPin_code());
 
         doctor.addClinic(clinic);
 
@@ -120,8 +155,8 @@ public class ClinicServiceImpl implements ClinicService {
     public Optional<Clinic> getClinicById(Long clinicId) {
         return clinicRepository.findById(clinicId);
     }
-    
-    
+
+
     @Transactional
     public String deleteClinic(Long doctorId, Long clinicId) {
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Doctor not found"));
@@ -137,9 +172,9 @@ public class ClinicServiceImpl implements ClinicService {
         return "Clinic of id " + clinicId + " deleted under the doctor of doctorId " + doctorId;
     }
 
-    
+
             //System.out.println(clinics.size());
-            
+
             // Clinic clinic = clinicRepository.findById(id)
             //         .orElseThrow(() -> new EntityNotFoundException("Clinic not found"));
 
@@ -150,7 +185,7 @@ public class ClinicServiceImpl implements ClinicService {
             //     clinicRepository.deleteById(id);
             //     return s;
             // }
-        
+
 
 
     @Override

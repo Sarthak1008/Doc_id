@@ -97,7 +97,7 @@ public class ClinicController {
     public List<Clinic> getAllClinics() {
         return clinicService.getAllClinics();
     }
-    
+
 
     @GetMapping("/amount")
     public ResponseEntity<Double> findAmountForClinicInDateRange(
@@ -112,7 +112,6 @@ public class ClinicController {
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
 
 }

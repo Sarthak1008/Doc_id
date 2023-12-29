@@ -8,7 +8,17 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.generateToken.generateToken.Gender.Gender;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,7 +56,7 @@ public class Prescription {
   @Transient
   private LocalTime endTime;
 
-  @Transient
+   @Transient
   private String contact;
 
   @Transient
@@ -71,5 +81,9 @@ public class Prescription {
   @ManyToOne
   @JoinColumn(name = "doctorId")
   private Doctor doctor;
+
+  @Transient
+  List<MedicinePrescription> medicines =  new ArrayList<>();
+
 
 }

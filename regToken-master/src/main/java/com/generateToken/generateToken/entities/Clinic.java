@@ -31,9 +31,14 @@ public class Clinic {
     private Long id;
     private String location;
     private String incharge;
-    private int fees;
+    private Double fees;
+    // @Column(name="pi",length = 6)
+    // private Integer pi;
     private LocalTime startTime;
-    private LocalTime endTime;
+    private Integer pincode;
+    
+
+  private LocalTime endTime;
 
     @ManyToOne
     @JsonIgnore
@@ -58,7 +63,6 @@ public class Clinic {
     public List<AppointmentDTOs> getAppointmentDto(){
         List<AppointmentDTOs> appointmentDTOs = new ArrayList<>();
         for(Appointment appointment : this.appointmentList){
-            //appointmentDTOs.add(appointment.getAppointmentDto());
           appointmentDTOs.add(appointment.getAppointmentDto());
         }
         return appointmentDTOs;

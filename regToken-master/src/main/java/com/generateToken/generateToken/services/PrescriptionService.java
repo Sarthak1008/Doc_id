@@ -1,11 +1,5 @@
 package com.generateToken.generateToken.services;
-
-
-import java.util.List;
-
-import com.generateToken.generateToken.dto.AppointmentDTOs;
 import com.generateToken.generateToken.dto.PrescriptionDto;
-import com.generateToken.generateToken.entities.Prescription;
 
 public interface PrescriptionService {
 
@@ -13,14 +7,14 @@ public interface PrescriptionService {
 //    PrescriptionDto createPrescription(Prescription prescription);
 //
 //    // Read
-//    PrescriptionDto getPrescriptionById(Long prescriptionId);
+   PrescriptionDto getPrescriptionById(Long prescriptionId,String patientContact);
 //    List<PrescriptionDto> getAllPrescriptions();
 //
 //    // Update
 //    PrescriptionDto updatePrescription(Long prescriptionId, PrescriptionDto prescriptionDto);
 //
 //    // Delete
-//    String deletePrescription(Long prescriptionId);
+   String deletePrescription(Long prescriptionId);
 
     PrescriptionDto bookPrescription(Long doctorId, Long clinicId,Long appointId, PrescriptionDto prescriptionDto);
 }

@@ -3,6 +3,8 @@ package com.generateToken.generateToken.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,8 +34,6 @@ public class Doctor {
     private int experience;
     private String research_journal;
     private String citations;
-//    @Column(unique = true,length=10)
-//    private String contact;
 
     @Column(unique = true, length = 10)
     @Size(min = 10, max = 10, message = "Contact length must be exactly 10 characters")
@@ -42,11 +42,8 @@ public class Doctor {
     private String email;
     private String password;
 
-
-
-
-
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<Clinic> clinics = new ArrayList<>();
 
     public void addClinic(Clinic clinic) {
@@ -59,9 +56,11 @@ public class Doctor {
     }
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Appointment> appointmentPatientList = new ArrayList<>();
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Prescription> prescriptionList = new ArrayList<>();
 
 

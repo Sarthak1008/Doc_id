@@ -20,8 +20,8 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       return  http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authorizeHttpRequests -> {authorizeHttpRequests
-                           .requestMatchers("/authenticate", "/sign-up","/home/register","/home/**","/clinic/betweenDate","/appointment/book1","/clinic/getApt","/image/**","/clinic/add","clinic/**","/medicine-prescriptions/**","prescriptions/book1").permitAll()
-                           .requestMatchers("/api/**","/home/amount","/clinic/amount").authenticated();
+                           .requestMatchers("/authenticate", "/sign-up","/home/register","/clinic/betweenDate","/appointment/book1","/clinic/getApt","/image/**","/clinic/add","/clinic/amount","/medicine-prescriptions/**","/prescriptions/**","/home/amount","/home/**","/http://localhost:9090/**","/payment/**","/clinic/**").permitAll()
+                           .requestMatchers("/api/**").authenticated();
                } ).sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
     }
 
