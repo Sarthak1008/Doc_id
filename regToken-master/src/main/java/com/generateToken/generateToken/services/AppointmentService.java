@@ -1,11 +1,12 @@
 package com.generateToken.generateToken.services;
+import java.util.List;
 
 import com.generateToken.generateToken.dto.AppointmentDTOs;
 import com.generateToken.generateToken.entities.Appointment;
 
 public interface AppointmentService {
     //String bookAppointment(AppointmentDTOs appointmentDto);
-    Appointment getByAadhar(String aadharCard);
+    List<Appointment> getByAadhar(String aadharCard);
 
     AppointmentDTOs bookAppointment(Long doctorId,Long clinicId,AppointmentDTOs appointmentPatient );
 

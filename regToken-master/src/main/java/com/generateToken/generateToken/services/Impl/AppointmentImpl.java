@@ -1,5 +1,7 @@
 package com.generateToken.generateToken.services.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,8 @@ public class AppointmentImpl implements AppointmentService {
 //    }
 
   @Override
-  public Appointment getByAadhar(String aadharCard) {
-    return null;
+  public List<Appointment> getByAadhar(String aadharCard) {
+    return appointmentRepository.findByAadharNumber(aadharCard);
   }
 
   @Override
@@ -65,7 +67,7 @@ public class AppointmentImpl implements AppointmentService {
 
         AppointmentDTOs appointmentDto1 =  new AppointmentDTOs();
         appointmentDto1.setName(patientAppointment.getName());
-        appointmentDto1.setContact(appointmentDto1.getContact());
+        appointmentDto1.setContact(patientAppointment.getContact());
         appointmentDto1.setAadharNumber(patientAppointment.getAadharNumber());
         appointmentDto1.setAge(patientAppointment.getAge());
         appointmentDto1.setGender(patientAppointment.getGender());

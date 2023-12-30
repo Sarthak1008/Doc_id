@@ -1,5 +1,7 @@
 package com.generateToken.generateToken.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generateToken.generateToken.dto.AppointmentDTOs;
 import com.generateToken.generateToken.entities.Appointment;
 import com.generateToken.generateToken.services.AppointmentService;
-
 //public class AppointmentController {
 //}
 @RestController
@@ -32,9 +33,9 @@ public class AppointmentController {
     }
 
     @GetMapping("/getByNumber")
-    public ResponseEntity<Appointment> getPatientByAadhar(@RequestParam String aadharCardNumber){
+    public ResponseEntity<List<Appointment>> getPatientByAadhar(@RequestParam String aadharCardNumber){
 
-        Appointment patient = appointmentService.getByAadhar(aadharCardNumber);
+        List<Appointment> patient = appointmentService.getByAadhar(aadharCardNumber);
 
         if(patient!=null){
             return ResponseEntity.ok(patient);

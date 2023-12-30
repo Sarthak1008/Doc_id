@@ -18,6 +18,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
     public int findByAppointmentDateBetween(Long clinicId, Date startDate, Date endDate);
 
     List<Appointment> findByContact(String contact);
+    List<Appointment> findByAadharNumber(String aadharNumber);
 
 
 }

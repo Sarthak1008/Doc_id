@@ -44,7 +44,7 @@ public class ClinicController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Clinic> getClinicById(@PathVariable("id") Long id) {
+    public ResponseEntity<Clinic> getClinicById(@PathVariable Long id) {
         System.out.println("anish");
         Optional<Clinic> clinic = clinicService.getClinicById(id);
         if (clinic.isPresent()) {
