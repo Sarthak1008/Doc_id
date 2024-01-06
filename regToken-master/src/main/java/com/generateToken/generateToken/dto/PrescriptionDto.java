@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.generateToken.generateToken.Gender.Gender;
+import com.generateToken.generateToken.Enum.Gender;
 import com.generateToken.generateToken.entities.MedicinePrescription;
 
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class PrescriptionDto {
 
     private Gender gender;
 
-    
+
     @Transient
     private String docName;
 

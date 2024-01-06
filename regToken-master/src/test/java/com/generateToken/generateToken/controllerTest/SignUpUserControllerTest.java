@@ -54,22 +54,6 @@ class SignUpUserControllerTest {
     // Add more test methods for other controller methods
 
     @Test
-    void getUser() {
-        // Arrange
-        Long docId = 1L;
-        DoctorDTO doctor = new DoctorDTO();
-        when(doctorService.getDoctor(anyLong())).thenReturn(doctor);
-
-        // Act
-        ResponseEntity<DoctorDTO> responseEntity = signUpUserController.getUser(docId);
-
-        // Assert
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(doctor, responseEntity.getBody());
-        verify(doctorService, times(1)).getDoctor(anyLong());
-    }
-
-    @Test
     void getAllDoctors() {
         // Arrange
         List<Doctor> doctors = List.of(new Doctor(), new Doctor());

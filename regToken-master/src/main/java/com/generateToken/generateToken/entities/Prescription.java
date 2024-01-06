@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.generateToken.generateToken.Gender.Gender;
+import com.generateToken.generateToken.Enum.Gender;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

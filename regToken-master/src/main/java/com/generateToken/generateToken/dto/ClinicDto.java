@@ -21,11 +21,13 @@ public class ClinicDto {
     private Long id;
     private String location;
     private String incharge;
+
+    private String clinicName;
     private Double fees;
     // @Column(name="pi",length = 6)
     // private Integer pi;
-    private LocalTime startTime;
-    private LocalTime endTime;
+   // private LocalTime startTime;
+    //private LocalTime endTime;
     private Doctor doctor;
     private Integer pincode;
 

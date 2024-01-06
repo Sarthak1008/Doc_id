@@ -122,11 +122,10 @@ public class ClinicServiceImpl implements ClinicService {
 
         Clinic clinic = new Clinic();
         clinic.setLocation(clinicDto.getLocation());
+        clinic.setClinicName(clinicDto.getClinicName());
         clinic.setIncharge(clinicDto.getIncharge());
         clinic.setFees(clinicDto.getFees());
-        clinic.setStartTime(clinicDto.getStartTime());
-        clinic.setEndTime(clinicDto.getEndTime());
-        //clinic.setPincode(clinicDto.getPincode());
+
         clinic.setDoctor(doctor);
         clinic.setPincode(clinicDto.getPincode());
         // clinic.setPi(clinicDto.getPi());
@@ -138,11 +137,9 @@ public class ClinicServiceImpl implements ClinicService {
         clinicDto1.setLocation(clinic.getLocation());
         clinicDto1.setIncharge(clinic.getIncharge());
         clinicDto1.setFees(clinic.getFees());
-        clinicDto1.setStartTime(clinic.getStartTime());
-        clinicDto1.setEndTime(clinic.getEndTime());
-       // clinicDto1.setPin_code(clinicDto1.getPin_code());
-       // clinicDto1.setPincode(clinic.getPincode());
-       // clinicDto1.setPinCode(clinic.getPin_code());
+        clinicDto1.setPincode(clinic.getPincode());
+        clinicDto1.setClinicName(clinic.getClinicName());
+
 
         doctor.addClinic(clinic);
 
@@ -197,8 +194,8 @@ public class ClinicServiceImpl implements ClinicService {
         clinic.setLocation(updatedClinicDto.getLocation());
         clinic.setIncharge(updatedClinicDto.getIncharge());
         clinic.setFees(updatedClinicDto.getFees());
-        clinic.setStartTime(updatedClinicDto.getStartTime());
-        clinic.setEndTime(updatedClinicDto.getEndTime());
+//        clinic.setStartTime(updatedClinicDto.getStartTime());
+//        clinic.setEndTime(updatedClinicDto.getEndTime());
 
         // Save the updated clinic entity
         clinic = clinicRepository.save(clinic);
@@ -208,8 +205,8 @@ public class ClinicServiceImpl implements ClinicService {
         updatedClinicDtoResponse.setLocation(clinic.getLocation());
         updatedClinicDtoResponse.setIncharge(clinic.getIncharge());
         updatedClinicDtoResponse.setFees(clinic.getFees());
-        updatedClinicDtoResponse.setStartTime(clinic.getStartTime());
-        updatedClinicDtoResponse.setEndTime(clinic.getEndTime());
+//        updatedClinicDtoResponse.setStartTime(clinic.getStartTime());
+//        updatedClinicDtoResponse.setEndTime(clinic.getEndTime());
 
         return updatedClinicDtoResponse;
     }

@@ -1,21 +1,24 @@
 package com.generateToken.generateToken.util;
 
-import com.generateToken.generateToken.repositories.DoctorRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import com.generateToken.generateToken.repositories.DoctorRepository;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
@@ -75,4 +78,30 @@ public class JwtUtil {
         byte[] keyBytes= Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+  public static String getEmailFromToken(String token) {
+    try {
+      Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+      Claims body = claimsJws.getBody();
+      System.out.println("body is "+" "+body.toString());
+      // Assuming that the doctor's ID is stored as a subject in the token
+      String subject = body.getSubject();
+      System.out.println("subject is"+" "+subject);
+      if (subject != null) {
+        return subject;
+      } else {
+        // Handle the case where the subject (doctor's ID) is not present in the token
+        System.err.println("Token does not contain a valid subject (doctor's ID).");
+        return null;
+      }
+
+    } catch (Exception e) {
+      // Handle token parsing or validation exceptions
+      e.printStackTrace();
+      // Log or throw an exception based on your error handling strategy
+      return null;
+    }
+  }
+
+  
 }

@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.generateToken.generateToken.dto.DoctorDTO;
 import com.generateToken.generateToken.dto.SignupRequest;
+import com.generateToken.generateToken.entities.ApiResponse;
 //import org.springframework.security.core.userdetails.User;
 import com.generateToken.generateToken.entities.Doctor;
 import com.generateToken.generateToken.repositories.DoctorRepository;
@@ -72,13 +74,14 @@ public class DoctorServiceImpl implements DoctorService {
 //
 //    }
 
-    public DoctorDTO getDoctor(Long id) {
-       // return userRepository.findById(id).orElse(null);
-       // return userRepository.findById(id).orElse(null);
-        Optional<Doctor> optionalDoctor = doctorRepository.findById(id);
-        if(optionalDoctor.isPresent()){
-            Doctor createdDoctor = optionalDoctor.get();
-            DoctorDTO doctorDTO = new DoctorDTO();
+    public DoctorDTO getDoctor(String email) {
+
+        Doctor createdDoctor = doctorRepository.findFirstByEmail(email);
+        createdDoctor = doctorRepository.save(createdDoctor);
+
+        DoctorDTO doctorDTO = new DoctorDTO();
+
+
             doctorDTO.setName(createdDoctor.getName());
             doctorDTO.setSpecialization(createdDoctor.getSpecialization());
             doctorDTO.setDegree(createdDoctor.getDegree());
@@ -87,12 +90,10 @@ public class DoctorServiceImpl implements DoctorService {
             doctorDTO.setCitations(createdDoctor.getCitations());
             doctorDTO.setContact(createdDoctor.getContact());
             doctorDTO.setEmail(createdDoctor.getEmail());
-            doctorDTO.setPassword(createdDoctor.getPassword());
+           // doctorDTO.setPassword(createdDoctor.getPassword());
             doctorDTO.setClinics(createdDoctor.getClinics());
             return doctorDTO;
-        }else{
-            return null;
-        }
+
     }
 
     @Override
@@ -134,5 +135,43 @@ public class DoctorServiceImpl implements DoctorService {
         }
         String s = "Deleted doctor " + doctorId;
         return s;
+    }
+
+    @Override
+    public ApiResponse forgotPassword(String email, String newPassword, String confirmPassword) {
+        Doctor doctor = doctorRepository.findFirstByEmail(email);
+
+        if (newPassword.equals(confirmPassword)) {
+            if (newPassword.length() > 7 && newPassword.length() < 20) {
+                if (!doctor.getPassword().equals(newPassword)) {
+                    // Check if the email is present in the password
+                    if (newPassword.contains(email)) {
+                        return createApiResponse(HttpStatus.NOT_IMPLEMENTED, "The password should not contain the email address pattern");
+                    }
+
+                    // Password strength checks
+                    if (!newPassword.matches(".*[A-Z].*") || !newPassword.matches(".*[a-z].*") || !newPassword.matches(".*\\d.*") || !newPassword.matches(".*[!@#$%^&*()-_=+\\[\\]{}|;:'\",.<>/?].*")) {
+                        return createApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, "The password should contain at least one upper case letter, one lower case letter, one special character, and one digit");
+                    }
+
+                    doctor.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+                    return createApiResponse(HttpStatus.OK, "Your password was successfully changed");
+                } else {
+                    return createApiResponse(HttpStatus.METHOD_NOT_ALLOWED, "The old password and new password should not match");
+                }
+            } else {
+                return createApiResponse(HttpStatus.LENGTH_REQUIRED, "Both the password and confirm password length should be between 8 and 20 characters");
+            }
+        } else {
+            return createApiResponse(HttpStatus.BAD_REQUEST, "Both the password and confirm password must match");
+        }
+    }
+
+
+     private ApiResponse createApiResponse(HttpStatus status, String message) {
+        ApiResponse response = new ApiResponse();
+        response.setStatusCode(status.value());
+        response.setMessage(message);
+        return response;
     }
 }

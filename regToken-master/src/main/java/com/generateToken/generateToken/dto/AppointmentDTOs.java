@@ -3,7 +3,7 @@ package com.generateToken.generateToken.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.generateToken.generateToken.Gender.Gender;
+import com.generateToken.generateToken.Enum.Gender;
 import com.generateToken.generateToken.entities.Clinic;
 
 import jakarta.persistence.*;

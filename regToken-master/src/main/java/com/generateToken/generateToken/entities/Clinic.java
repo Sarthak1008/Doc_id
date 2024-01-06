@@ -30,15 +30,17 @@ public class Clinic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String location;
+
+    private String clinicName;
     private String incharge;
     private Double fees;
     // @Column(name="pi",length = 6)
     // private Integer pi;
-    private LocalTime startTime;
+    //private LocalTime startTime;
     private Integer pincode;
-    
 
-  private LocalTime endTime;
+
+ // private LocalTime endTime;
 
     @ManyToOne
     @JsonIgnore

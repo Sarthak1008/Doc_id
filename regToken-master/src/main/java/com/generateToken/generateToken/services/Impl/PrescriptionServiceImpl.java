@@ -59,8 +59,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     prescription.setSpeciality(doctor.getSpecialization());
     prescription.setDegree(doctor.getDegree());
     prescription.setSpeciality(doctor.getSpecialization());
-    prescription.setStartTime(clinic.getStartTime());
-    prescription.setEndTime(clinic.getEndTime());
+//    prescription.setStartTime(clinic.getStartTime());
+//    prescription.setEndTime(clinic.getEndTime());
     prescription.setAge(appointment.getAge());
 
 
@@ -93,9 +93,9 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         Long cid = prescription.getClinic().getId();
         Clinic c = clinicRepository.findById(cid).orElseThrow(()-> new EntityNotFoundException("Clinic not found"));
         prescriptionDto.setLocation(c.getLocation());
-        prescriptionDto.setStartTime(c.getStartTime());
+       // prescriptionDto.setStartTime(c.getStartTime());
         prescriptionDto.setContact(c.getDoctor().getContact());
-        prescriptionDto.setEndTime(c.getEndTime());
+       // prescriptionDto.setEndTime(c.getEndTime());
         List<Appointment> appointments = appointmentRepository.findByContact(patientContact);
         if (!appointments.isEmpty()) {
           Appointment firstAppointment = appointments.get(0);
